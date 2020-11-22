@@ -1,0 +1,31 @@
+.perks-container {
+    display: flex;
+    font-size: 11px;
+    text-align: left;
+}
+
+.perk-item {
+    margin: 15px;
+    position: relative;
+}
+
+.perk-details {
+    position: absolute;
+    width: 300px;
+}
+
+.perk-icon {
+    max-width: 100px;
+}
+
+.perk-tier-3 {
+    color: #199b1e;
+}
+
+.perk-tier-2 {
+    color: #ac3ee3;
+}
+
+.perk-tier-1 {
+    color: #ff0955;
+}

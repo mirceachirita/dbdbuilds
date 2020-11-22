@@ -1,0 +1,22 @@
+@import "./variables";
+
+.dashboard-wrapper {
+    padding: 25px 0;
+    position: fixed;
+    width: $dashboard-gutter;
+    top: 0;
+    left: 0;
+}
+
+.dashboard-list {
+    margin: 0;
+    padding: 0;
+    padding-left: 50px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-item {
+    margin-bottom: 25px;
+}
