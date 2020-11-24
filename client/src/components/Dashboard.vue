@@ -5,6 +5,9 @@
         <router-link to="/builds" tag="button">Builds</router-link>
       </li>
       <li class="dashboard-item">
+        <router-link to="/build-creator" tag="button">Build creator</router-link>
+      </li>
+      <li class="dashboard-item">
         <router-link to="/perks" tag="button">Perks</router-link>
       </li>
       <li class="dashboard-item">

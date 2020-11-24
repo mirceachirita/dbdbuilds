@@ -3,7 +3,8 @@
     <!-- <img class="perk-icon" :src="perkData.icon" /> -->
     <button
       type="button" class="perk-button"
-      @mouseover="toggleDetailsOn" @mouseleave="toggleDetailsOff"
+      @mouseover="toggleDetailsOn"
+      @mouseleave="toggleDetailsOff"
     >
       <img class="perk-icon" :src="perkData.icon" />
     </button>

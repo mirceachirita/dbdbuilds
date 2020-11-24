@@ -25,9 +25,9 @@ POST http://localhost:3000/perksTest
 Content-Type: application/json
 
 {
-    "title": "Empathy",
-    "description": "Unlocks potential in one's Aura-reading ability.<br> Dying or Injured Allies' Auras are revealed to you when within <span class='perk-tier-3'>64</span>/<span class='perk-tier-2'>96</span>/<span class='perk-tier-3'>128</span> metres of range.<br> Empathy does not reveal Auras of Allies when they are in the Killer's direct contact.",
-    "icon": "icon-perk-empathy",
+    "title": "Saboteur",
+    "description": "Unlocks potential in one's Aura-reading ability. <ul><li> See Hook Auras in a radius of 56 metres from the pick-up spot if a Survivor is being carried.</li> <li>Unlocks the ability to sabotage Hooks without a Toolbox.</li> <li>Sabotaging a Hook without a Toolbox takes 2.5 seconds.</li> <li> The Sabotage action has a cool-down of <span class='perk-tier-3'>90</span>/<span class='perk-tier-2'>75</span>/<span class='perk-tier-1'>60</span> seconds.</li>",
+    "icon": "https://raw.githubusercontent.com/mirceachirita/dbdbuilds/master/static/perks/saboteur.png",
     "category": "Survivor",
     "character": "5fb862615940e32aacd98833"
 }
@@ -35,4 +35,4 @@ Content-Type: application/json
 ### 
 ### Delete perk
 
-DELETE http://localhost:3000/perksTest/5fb9b6a2213ccb51e81f7ad4
+DELETE http://localhost:3000/perksTest/5fb8630f5940e32aacd98834

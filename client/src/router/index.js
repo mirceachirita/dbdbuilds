@@ -5,6 +5,7 @@ import Builds from '../views/Builds.vue';
 import Perks from '../views/Perks.vue';
 import Survivors from '../views/Survivors.vue';
 import Killers from '../views/Killers.vue';
+import BuildCreator from '../views/BuildCreator.vue';
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/survivors',
     name: 'Survivors',
     component: Survivors,
+  },
+  {
+    path: '/build-creator',
+    name: 'BuildCreator',
+    component: BuildCreator,
   },
 ];
 
