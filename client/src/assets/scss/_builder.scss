@@ -1,0 +1,68 @@
+.builder-inventory-perks {
+    display: flex;
+    flex-wrap: wrap;
+    //max-width: 700px;
+}
+
+.inventory-row {
+    display: flex;
+    flex-wrap: wrap;
+
+    // flex-grow: 1;
+    // flex-shrink: 0;
+    // flex-basis: 100%;
+}
+
+.inventory-perk {
+    margin-left: 5px;
+    // transform: rotate(45deg);
+    // margin-left: 45px;
+
+    img {
+        width: 111px;
+        //width: 85px;
+        //opacity: 0.1;
+        transition: opacity 0.3s ease;
+    }
+
+    .inventory-perk-btn {
+        position: relative;
+
+        &:hover {
+            .inventory-perk-img {
+                //filter: contrast(110%);
+            }
+        }
+    }
+
+    &:not(.has-perk-populated) {
+        .inventory-perk-btn {            
+            &:hover {
+                .inventory-empty-perk-img {
+                    opacity: 0.2;
+                }
+            }
+        }
+    }
+    
+    .inventory-empty-perk-img {
+        opacity: 0.1;
+    }
+
+    .inventory-perk-img {
+        position: absolute;
+        z-index: 2;
+        bottom: 17px;
+        left: 10px;
+    }
+}
+
+.inventory-row {
+    &:not(.first-row) {
+        margin-top: -34px;
+    }
+
+    &.odd {
+        margin-left: 56px;
+    }
+}
