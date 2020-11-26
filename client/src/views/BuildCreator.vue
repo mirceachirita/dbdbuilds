@@ -8,97 +8,72 @@
         Offering
       </div>
     </div>
-    <div class="builder-perks">
-      Selected perks
+
+    <div class="builder-perks builder-inventory-perks">
+      <div class="inventory-row">
+        <LoadoutPerk v-for="(slot, index) in 4" :key="'loadout-slot-' + index"
+        :slotIndex="index" @selectedLoadoutPerk="handleSelectedLoadoutPerk($event)"
+        :isActive="loadoutSelectedSlotId == 'loadout-slot-' + index"
+        />
+      </div>
     </div>
+
     <div class="builder-inventory-perks">
-      <div class="inventory-row first-row even">
-        <div class="inventory-perk has-perk-populated">
-          <button type="button" class="inventory-perk-btn">
-            <img class="inventory-perk-img" src="https://raw.githubusercontent.com/mirceachirita/dbdbuilds/master/static/perks/left_behind.png" />
-            <img class="inventory-empty-perk-img" src="https://raw.githubusercontent.com/mirceachirita/dbdbuilds/master/static/perks/empty.png" />
-          </button>
-        </div>
-        <div class="inventory-perk has-perk-populated">
-          <button type="button" class="inventory-perk-btn">
-            <img class="inventory-perk-img" src="https://raw.githubusercontent.com/mirceachirita/dbdbuilds/master/static/perks/empathy.png" />
-            <img class="inventory-empty-perk-img" src="https://raw.githubusercontent.com/mirceachirita/dbdbuilds/master/static/perks/empty.png" />
-          </button>
-        </div>
-        <div class="inventory-perk has-perk-populated">
-          <button type="button" class="inventory-perk-btn">
-            <img class="inventory-perk-img" src="https://raw.githubusercontent.com/mirceachirita/dbdbuilds/master/static/perks/saboteur.png" />
-            <img class="inventory-empty-perk-img" src="https://raw.githubusercontent.com/mirceachirita/dbdbuilds/master/static/perks/empty.png" />
-          </button>
-        </div>
-        <div class="inventory-perk">
-          <button type="button" class="inventory-perk-btn">
-            <img class="inventory-empty-perk-img" src="https://raw.githubusercontent.com/mirceachirita/dbdbuilds/master/static/perks/empty.png" />
-          </button>
-        </div>
-        <div class="inventory-perk">
-          <button type="button" class="inventory-perk-btn">
-            <img class="inventory-empty-perk-img" src="https://raw.githubusercontent.com/mirceachirita/dbdbuilds/master/static/perks/empty.png" />
-          </button>
-        </div>
-      </div>
-      <div class="inventory-row odd">
-        <div class="inventory-perk">
-          <button type="button" class="inventory-perk-btn">
-            <img class="inventory-empty-perk-img" src="https://raw.githubusercontent.com/mirceachirita/dbdbuilds/master/static/perks/empty.png" />
-          </button>
-        </div>
-        <div class="inventory-perk">
-          <button type="button" class="inventory-perk-btn">
-            <img class="inventory-empty-perk-img" src="https://raw.githubusercontent.com/mirceachirita/dbdbuilds/master/static/perks/empty.png" />
-          </button>
-        </div>
-        <div class="inventory-perk">
-          <button type="button" class="inventory-perk-btn">
-            <img class="inventory-empty-perk-img" src="https://raw.githubusercontent.com/mirceachirita/dbdbuilds/master/static/perks/empty.png" />
-          </button>
-        </div>
-        <div class="inventory-perk">
-          <button type="button" class="inventory-perk-btn">
-            <img class="inventory-empty-perk-img" src="https://raw.githubusercontent.com/mirceachirita/dbdbuilds/master/static/perks/empty.png" />
-          </button>
-        </div>
-        <div class="inventory-perk">
-          <button type="button" class="inventory-perk-btn">
-            <img class="inventory-empty-perk-img" src="https://raw.githubusercontent.com/mirceachirita/dbdbuilds/master/static/perks/empty.png" />
-          </button>
-        </div>
-      </div>
-      <div class="inventory-row even">
-        <div class="inventory-perk">
-          <button type="button" class="inventory-perk-btn">
-            <img class="inventory-empty-perk-img" src="https://raw.githubusercontent.com/mirceachirita/dbdbuilds/master/static/perks/empty.png" />
-          </button>
-        </div>
-        <div class="inventory-perk">
-          <button type="button" class="inventory-perk-btn">
-            <img class="inventory-empty-perk-img" src="https://raw.githubusercontent.com/mirceachirita/dbdbuilds/master/static/perks/empty.png" />
-          </button>
-        </div>
-        <div class="inventory-perk">
-          <button type="button" class="inventory-perk-btn">
-            <img class="inventory-empty-perk-img" src="https://raw.githubusercontent.com/mirceachirita/dbdbuilds/master/static/perks/empty.png" />
-          </button>
-        </div>
-        <div class="inventory-perk">
-          <button type="button" class="inventory-perk-btn">
-            <img class="inventory-empty-perk-img" src="https://raw.githubusercontent.com/mirceachirita/dbdbuilds/master/static/perks/empty.png" />
-          </button>
-        </div>
-        <div class="inventory-perk">
-          <button type="button" class="inventory-perk-btn">
-            <img class="inventory-empty-perk-img" src="https://raw.githubusercontent.com/mirceachirita/dbdbuilds/master/static/perks/empty.png" />
-          </button>
-        </div>
+      <div class="inventory-row">
+        <InventoryPerk v-for="(perk, index) in perks"
+          :key="perk._id" :perkData="perk" :perkIndex="index"
+          @selectedInventoryPerk="handleSelectedInventoryPerk($event)"
+          :isActive="inventorySelectedPerkId == 'inventory-perk-' + index"
+        />
       </div>
     </div>
   </div>
 </template>
+
+<script>
+import InventoryPerk from '@/components/InventoryPerk.vue';
+import LoadoutPerk from '@/components/LoadoutPerk.vue';
+import axios from 'axios';
+
+export default {
+  components: {
+    InventoryPerk,
+    LoadoutPerk,
+  },
+  data() {
+    return {
+      inventorySelectedPerk: null,
+      inventorySelectedPerkId: null,
+      loadoutSelectedSlotId: null,
+      loading: true,
+      perks: null,
+      errored: false,
+    };
+  },
+  methods: {
+    handleSelectedInventoryPerk(data) {
+      this.inventorySelectedPerk = data.perkDatabaseId;
+      this.inventorySelectedPerkId = data.perkSelectorId;
+    },
+    handleSelectedLoadoutPerk(id) {
+      this.loadoutSelectedSlotId = id;
+    },
+  },
+  computed: {
+  },
+  mounted() {
+    axios.get('http://localhost:3000/perksTest')
+      .then((response) => {
+        this.perks = response.data;
+      }).catch((error) => {
+        this.errored = true;
+        console.log(error);
+      }).finally(() => {
+        this.loading = false;
+      });
+  },
+};
+</script>
 
 <style lang="scss" scoped>
     @import "../assets/scss/builder";
