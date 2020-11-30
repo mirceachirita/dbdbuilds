@@ -25,6 +25,13 @@
         transition: opacity 0.3s ease;
     }
 
+    &.inventory-perk-active,
+    &.loadout-slot-active {
+        .inventory-perk-btn {
+            border: 1px solid black;
+        }
+    }
+
     .inventory-perk-btn {
         position: relative;
 
@@ -65,4 +72,8 @@
     &.odd {
         margin-left: 56px;
     }
+}
+
+.builder-perks {
+    margin-bottom: 50px;
 }

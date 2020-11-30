@@ -1,7 +1,7 @@
 <template>
   <div :class="['inventory-perk', (isActive ? 'loadout-slot-active' : '')]">
     <button type="button" class="inventory-perk-btn"
-      :id="'loadout-slot-' + slotIndex"
+      :id="slotIndex"
       @click="handleClick($event)"
     >
       <img v-if="perkData" class="inventory-perk-img" :src="perkData.icon" />

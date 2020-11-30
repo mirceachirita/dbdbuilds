@@ -11,16 +11,19 @@
 
     <div class="builder-perks builder-inventory-perks">
       <div class="inventory-row">
-        <LoadoutPerk v-for="(slot, index) in 4" :key="'loadout-slot-' + index"
+        <LoadoutPerk v-for="(slot, index) in this.builderSelectedPerks"
+        :key="'loadoutSlot_' + index"
         :slotIndex="index" @selectedLoadoutPerk="handleSelectedLoadoutPerk($event)"
-        :isActive="loadoutSelectedSlotId == 'loadout-slot-' + index"
+        :isActive="loadoutSelectedSlotId == index"
+        :perkData="slot"
         />
       </div>
     </div>
 
     <div class="builder-inventory-perks">
       <div class="inventory-row">
-        <InventoryPerk v-for="(perk, index) in perks"
+        <Loader v-if="loading" />
+        <InventoryPerk v-else v-for="(perk, index) in perks"
           :key="perk._id" :perkData="perk" :perkIndex="index"
           @selectedInventoryPerk="handleSelectedInventoryPerk($event)"
           :isActive="inventorySelectedPerkId == 'inventory-perk-' + index"
@@ -31,6 +34,7 @@
 </template>
 
 <script>
+import Loader from '@/components/Loader.vue';
 import InventoryPerk from '@/components/InventoryPerk.vue';
 import LoadoutPerk from '@/components/LoadoutPerk.vue';
 import axios from 'axios';
@@ -39,6 +43,7 @@ export default {
   components: {
     InventoryPerk,
     LoadoutPerk,
+    Loader,
   },
   data() {
     return {
@@ -46,20 +51,52 @@ export default {
       inventorySelectedPerkId: null,
       loadoutSelectedSlotId: null,
       loading: true,
-      perks: null,
+      perks: [],
       errored: false,
+      builderSelectedPerks: {
+        loadoutSlot_0: {},
+        loadoutSlot_1: {},
+        loadoutSlot_2: {},
+        loadoutSlot_3: {},
+      },
     };
   },
   methods: {
     handleSelectedInventoryPerk(data) {
       this.inventorySelectedPerk = data.perkDatabaseId;
       this.inventorySelectedPerkId = data.perkSelectorId;
+      this.updateBuilderLoadout();
     },
     handleSelectedLoadoutPerk(id) {
       this.loadoutSelectedSlotId = id;
     },
-  },
-  computed: {
+    findPerk(id) {
+      return this.perks.find((perk) => perk._id === id);
+    },
+    updateBuilderLoadout() {
+      const perkId = this.inventorySelectedPerk;
+      const slotId = this.loadoutSelectedSlotId;
+
+      if (!perkId || !slotId) { return; }
+      const slotToEmpty = this.checkAndReturnPerkAlreadyInSlot(perkId);
+
+      if (typeof slotToEmpty !== 'undefined') {
+        this.removePerkFromLoadout(slotToEmpty);
+      } else {
+        this.addPerkInLoadout(slotId, perkId);
+      }
+    },
+    checkAndReturnPerkAlreadyInSlot(perkId) {
+      const obj = this.builderSelectedPerks;
+      const perkInSlot = Object.keys(obj).find((section) => obj[section]._id === perkId);
+      return perkInSlot;
+    },
+    removePerkFromLoadout(slotId) {
+      this.$set(this.builderSelectedPerks, slotId, '');
+    },
+    addPerkInLoadout(slotId, perkId) {
+      this.$set(this.builderSelectedPerks, slotId, this.findPerk(perkId));
+    },
   },
   mounted() {
     axios.get('http://localhost:3000/perksTest')
